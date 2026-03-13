@@ -162,9 +162,9 @@ def decode(data: bytes | bytearray) -> str:
         elif 0x20 <= b <= 0x7E:
             parts.append(chr(b))
         elif b == 0x09:
-            parts.append('\t')
+            parts.append("\t")
         elif b == 0x0A:
             pass  # skip LF; CR (0x0D → \n) is the line separator
         else:
-            parts.append(f'«{b:02x}»')
-    return ''.join(parts)
+            parts.append(f"«{b:02x}»")
+    return "".join(parts)

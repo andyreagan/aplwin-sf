@@ -34,7 +34,7 @@ __all__ = ["Function", "ComponentFile", "read_file", "read_functions"]
 
 # Four spaces + ∇ (0xEC) + space — marks the start of function text
 # at byte offset +20 inside each sub-object.
-_FUNCTION_MARKER = b"\x20\x20\x20\x20\xEC\x20"
+_FUNCTION_MARKER = b"\x20\x20\x20\x20\xec\x20"
 
 
 def _u32(data: bytes | bytearray, offset: int) -> int:

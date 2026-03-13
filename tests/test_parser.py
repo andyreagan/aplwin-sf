@@ -1,10 +1,10 @@
 """Tests for aplwin_sf.parser using synthetic .sf fixtures."""
 
-import pytest
 from pathlib import Path
 
-from aplwin_sf.parser import read_file, read_functions, Function, ComponentFile
+import pytest
 
+from aplwin_sf.parser import ComponentFile, read_file, read_functions
 
 FIXTURES = Path(__file__).resolve().parent.parent / "fixtures"
 
@@ -190,17 +190,18 @@ class TestEdgeCases:
 
     def test_random_bytes_no_crash(self):
         import os
+
         fns = read_functions(os.urandom(256))
         assert isinstance(fns, list)
 
     def test_marker_at_start_of_file(self):
         """Marker too close to file start (no room for header)."""
-        data = b"\x20\x20\x20\x20\xEC\x20" + b"A" * 100
+        data = b"\x20\x20\x20\x20\xec\x20" + b"A" * 100
         fns = read_functions(data)
         assert fns == []  # header_off would be negative
 
     def test_truncated_header(self):
         """Marker present but not enough bytes for header validation."""
-        data = b"\x00" * 15 + b"\x20\x20\x20\x20\xEC\x20"
+        data = b"\x00" * 15 + b"\x20\x20\x20\x20\xec\x20"
         fns = read_functions(data)
         assert fns == []

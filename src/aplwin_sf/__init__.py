@@ -19,7 +19,7 @@ Or from the command line::
 """
 
 from .encoding import APL_MAP, decode
-from .parser import read_file, read_functions, Function, ComponentFile
+from .parser import ComponentFile, Function, read_file, read_functions
 
 __all__ = [
     "APL_MAP",

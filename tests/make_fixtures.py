@@ -98,23 +98,9 @@ def make_simple() -> bytes:
 
 def make_multi() -> bytes:
     """Three functions in one file, exercising various APL symbols."""
-    fn1 = (
-        "    ∇ R←N TAKE V;⎕IO\n"
-        "[1]   ⎕IO←1\n"
-        "[2]   R←N↑V\n"
-        "    ∇\n"
-    )
-    fn2 = (
-        "    ∇ R←IOTA N\n"
-        "[1]   R←⍳N\n"
-        "    ∇\n"
-    )
-    fn3 = (
-        "    ∇ R←A PLUS B\n"
-        "[1]   ⍝ Add two values\n"
-        "[2]   R←A+B\n"
-        "    ∇\n"
-    )
+    fn1 = "    ∇ R←N TAKE V;⎕IO\n[1]   ⎕IO←1\n[2]   R←N↑V\n    ∇\n"
+    fn2 = "    ∇ R←IOTA N\n[1]   R←⍳N\n    ∇\n"
+    fn3 = "    ∇ R←A PLUS B\n[1]   ⍝ Add two values\n[2]   R←A+B\n    ∇\n"
     blobs = [_make_sub_object(_encode_apl(f)) for f in [fn1, fn2, fn3]]
     return _make_sf(blobs)
 
@@ -145,21 +131,13 @@ def make_data_and_functions() -> bytes:
     # A blob of fake "data" — NOT a function (no marker)
     fake_data = struct.pack("<III", 64, 1, 0x02000000) + b"\x00" * 52
 
-    fn = (
-        "    ∇ R←DOUBLE N\n"
-        "[1]   R←2×N\n"
-        "    ∇\n"
-    )
+    fn = "    ∇ R←DOUBLE N\n[1]   R←2×N\n    ∇\n"
     fn_blob = _make_sub_object(_encode_apl(fn))
 
     # More fake data
     fake_data2 = struct.pack("<III", 48, 1, 0x03000000) + b"\x00" * 36
 
-    fn2 = (
-        "    ∇ R←HALF N\n"
-        "[1]   R←N÷2\n"
-        "    ∇\n"
-    )
+    fn2 = "    ∇ R←HALF N\n[1]   R←N÷2\n    ∇\n"
     fn2_blob = _make_sub_object(_encode_apl(fn2))
 
     return _make_sf([fake_data, fn_blob, fake_data2, fn2_blob])
@@ -173,11 +151,7 @@ def make_empty() -> bytes:
 
 def make_high_minus() -> bytes:
     """Function using ¯ (high minus / macron / overbar)."""
-    src = (
-        "    ∇ R←LASTROW M\n"
-        "[1]   R←(¯1↑⍴M)↑M\n"
-        "    ∇\n"
-    )
+    src = "    ∇ R←LASTROW M\n[1]   R←(¯1↑⍴M)↑M\n    ∇\n"
     return _make_sf([_make_sub_object(_encode_apl(src))])
 
 
@@ -191,7 +165,10 @@ FIXTURES = {
 }
 
 
-def build_all(dest: Path | str = Path(__file__).resolve().parent.parent / "fixtures"):
+_DEFAULT_DEST = Path(__file__).resolve().parent.parent / "fixtures"
+
+
+def build_all(dest: Path | str = _DEFAULT_DEST):
     dest = Path(dest)
     dest.mkdir(parents=True, exist_ok=True)
     for name, builder in FIXTURES.items():
@@ -201,5 +178,6 @@ def build_all(dest: Path | str = Path(__file__).resolve().parent.parent / "fixtu
 
 if __name__ == "__main__":
     import sys
+
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
     build_all()
