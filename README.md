@@ -1,5 +1,8 @@
 # aplwin-sf
 
+[![CI](https://github.com/andyreagan/aplwin-sf/actions/workflows/ci.yml/badge.svg)](https://github.com/andyreagan/aplwin-sf/actions/workflows/ci.yml)
+[![PyPI version](https://img.shields.io/pypi/v/aplwin-sf)](https://pypi.org/project/aplwin-sf/)
+
 Read APL+Win component files (`.sf`) from Python.
 
 APL+Win stores source code and data in a proprietary binary format called
