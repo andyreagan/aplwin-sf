@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Read APL+Win component files (.sf) from Python"
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [{ name = "Andy Reagan" }]
 keywords = ["apl", "aplwin", "component-file", "parser", "legacy"]
 classifiers = [
@@ -16,11 +16,11 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Software Development :: Libraries",
     "Topic :: System :: Archiving",
 ]
@@ -29,13 +29,18 @@ classifiers = [
 aplwin-sf = "aplwin_sf.cli:main"
 
 [project.urls]
+Homepage = "https://github.com/andyreagan/aplwin-sf"
 Repository = "https://github.com/andyreagan/aplwin-sf"
+Issues = "https://github.com/andyreagan/aplwin-sf/issues"
+
+[dependency-groups]
+dev = ["pytest"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = [

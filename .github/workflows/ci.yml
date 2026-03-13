@@ -12,23 +12,25 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install Python
+        run: uv python install ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install pytest
+        run: uv sync
 
       - name: Generate fixtures
-        run: PYTHONPATH=src python tests/make_fixtures.py
+        run: uv run python tests/make_fixtures.py
 
       - name: Run tests
-        run: PYTHONPATH=src python -m pytest tests/ -v
+        run: uv run pytest tests/ -v
 
   publish:
     needs: test
@@ -41,14 +43,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install Python
+        run: uv python install
 
       - name: Build
-        run: |
-          pip install build
-          python -m build
+        run: uv build
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
